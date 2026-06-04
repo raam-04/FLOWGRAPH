@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAROGYA – The Village Doctor Agent</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8652A;
+    --saffron-light: #F4885A;
+    --green: #1A7A4A;
+    --green-light: #2AA862;
+    --green-pale: #E8F5EE;
+    --cream: #FDF6EE;
+    --brown: #5C3D1E;
+    --gold: #C8901A;
+    --sky: #1B6FA8;
+    --sky-light: #4A9FD4;
+    --red: #C0392B;
+    --purple: #7B3FA0;
+    --bg: #F8F2E8;
+    --text: #2C1810;
+    --border: #D4B896;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1A7A4A 0%, #0D4F2E 50%, #1B3A4B 100%);
+    padding: 60px 40px 80px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(232,101,42,0.25);
+    border: 1px solid rgba(232,101,42,0.5);
+    color: #F4885A;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: #F4885A; }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+  .hero-tagline {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-tagline strong { color: #fff; font-weight: 600; }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #F4885A;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* PROBLEM SECTION */
+  .section {
+    padding: 70px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 40px;
+    line-height: 1.2;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .problem-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .problem-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .problem-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--saffron);
+  }
+  .problem-icon { font-size: 32px; margin-bottom: 14px; }
+  .problem-card h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .problem-card p { font-size: 13px; color: #666; line-height: 1.6; }
+
+  /* MAIN FLOW */
+  .flow-section {
+    background: linear-gradient(180deg, var(--bg) 0%, #EEE8DC 100%);
+    padding: 80px 40px;
+  }
+  .flow-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* Patient Entry */
+  .patient-entry {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--green);
+    border-radius: 24px;
+    padding: 32px 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .patient-entry::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .patient-avatar {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+  .patient-entry-text { flex: 1; }
+  .patient-entry h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: #fff; margin-bottom: 6px; }
+  .patient-entry p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .patient-actions {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;
+  }
+  .action-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* AGENTS FLOW */
+  .agents-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .flow-connector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    position: relative;
+  }
+  .flow-connector::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--green), var(--saffron));
+    transform: translateX(-50%);
+  }
+  .flow-connector-arrow {
+    width: 32px; height: 32px;
+    background: var(--cream);
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    z-index: 1;
+  }
+
+  .agent-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 180px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .agent-card:hover { transform: scale(1.01); box-shadow: 0 8px 40px rgba(0,0,0,0.13); }
+
+  .agent-left {
+    padding: 30px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .agent-right {
+    background: #fff;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: none;
+  }
+
+  .agent-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .agent-left h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .agent-left p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+  .agent-icon { font-size: 40px; margin-bottom: 16px; }
+
+  .agent-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .feature-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .feature-text { font-size: 13.5px; color: #444; line-height: 1.5; }
+  .feature-text strong { color: var(--text); font-weight: 600; }
+
+  .example-box {
+    margin-top: 16px;
+    background: var(--green-pale);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #444;
+    line-height: 1.6;
+  }
+  .example-box .ex-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  /* Agent colors */
+  .agent-1 .agent-left { background: linear-gradient(135deg, #1A7A4A, #0D5533); }
+  .agent-2 .agent-left { background: linear-gradient(135deg, #1B6FA8, #0F4D7A); }
+  .agent-3 .agent-left { background: linear-gradient(135deg, #7B3FA0, #562C70); }
+  .agent-4 .agent-left { background: linear-gradient(135deg, #C0392B, #8E1B10); }
+  .agent-5 .agent-left { background: linear-gradient(135deg, #C8901A, #9A6B0A); }
+  .agent-1 .feature-dot { background: var(--green); }
+  .agent-2 .feature-dot { background: var(--sky); }
+  .agent-3 .feature-dot { background: var(--purple); }
+  .agent-4 .feature-dot { background: var(--red); }
+  .agent-5 .feature-dot { background: var(--gold); }
+
+  /* RISK + DOCTOR ALERT */
+  .alert-band {
+    background: linear-gradient(135deg, #C0392B, #8E1B10);
+    border-radius: 20px;
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin: 0;
+    box-shadow: 0 4px 24px rgba(192,57,43,0.25);
+  }
+  .alert-icon { font-size: 48px; flex-shrink: 0; }
+  .alert-text h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: #fff; margin-bottom: 8px; }
+  .alert-text p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  .alert-chips { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .alert-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 14px;
+  }
+
+  /* DOCTOR DASHBOARD */
+  .doctor-section {
+    background: linear-gradient(135deg, #0D4F2E, #1B3A4B);
+    border-radius: 20px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .doctor-icon { font-size: 56px; flex-shrink: 0; }
+  .doctor-text { flex: 1; }
+  .doctor-text h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: #fff; margin-bottom: 10px; }
+  .doctor-text p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; }
+  .doctor-dashboard-mockup {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    min-width: 240px;
+  }
+  .dash-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+  }
+  .dash-row:last-child { border-bottom: none; }
+  .dash-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* TECH STACK */
+  .tech-section {
+    padding: 70px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .tech-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .tech-card:hover { transform: translateY(-3px); }
+  .tech-card-icon { font-size: 28px; margin-bottom: 10px; }
+  .tech-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: 0.5px; }
+  .tech-card p { font-size: 12px; color: #888; line-height: 1.6; }
+
+  /* PITCH */
+  .pitch-section {
+    background: linear-gradient(135deg, var(--saffron), #B84A1A);
+    padding: 80px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pitch-section::before {
+    content: '"';
+    position: absolute;
+    top: -40px; left: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 300px;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .pitch-section p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 34px);
+    color: #fff;
+    max-width: 900px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .pitch-section .authors {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* LANG BADGE */
+  .lang-badges {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .lang-badge {
+    background: rgba(26,122,74,0.12);
+    border: 1px solid rgba(26,122,74,0.25);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 40px;
+  }
+
+  @media (max-width: 768px) {
+    .agent-card { grid-template-columns: 1fr; }
+    .agent-left { padding: 24px; }
+    .doctor-section { flex-direction: column; }
+    .doctor-dashboard-mockup { min-width: unset; width: 100%; }
+    .patient-entry { flex-direction: column; text-align: center; }
+    .alert-band { flex-direction: column; text-align: center; }
+    .section { padding: 50px 20px; }
+    .flow-section { padding: 50px 20px; }
+    .tech-section { padding: 50px 20px; }
+    .hero { padding: 40px 20px 60px; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🌿 Agentic AI for Rural Healthcare</div>
+  <h1>AARO<span>GYA</span></h1>
+  <div class="hero-sub">आरोग्य · ஆரோக்யா · ఆరోగ్య · The Village Doctor Agent</div>
+  <p class="hero-tagline">
+    An AI-powered health companion that <strong>reads prescriptions</strong>, explains them in local languages,
+    monitors patients daily, and ensures <strong>no rural patient ever misses a medicine or follow-up</strong>.
+  </p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">AI Agents</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Languages</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Monitoring</div></div>
+    <div class="stat"><div class="stat-num">0₹</div><div class="stat-label">Cost to Patient</div></div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="section-label">The Problem</div>
+  <div class="section-title">Why Rural Patients Suffer After Consultation</div>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">📄</div>
+      <h4>Unreadable Prescriptions</h4>
+      <p>Prescriptions written in English that patients cannot read or understand.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⏰</div>
+      <h4>Missed Medicines</h4>
+      <p>No reminders mean patients forget timing and dosage of critical medicines.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🏥</div>
+      <h4>Skipped Follow-ups</h4>
+      <p>Hospitals are far away — patients skip vital revisits and checkups.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🧪</div>
+      <h4>Confusing Lab Reports</h4>
+      <p>Blood test results are meaningless to patients without explanation.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">👨‍⚕️</div>
+      <h4>Overloaded Doctors</h4>
+      <p>Doctors have minutes per patient — no time for detailed guidance.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MAIN FLOW DIAGRAM -->
+<div class="flow-section">
+  <div class="flow-inner">
+    <div style="text-align:center; margin-bottom: 48px;">
+      <div class="section-label" style="text-align:center;">Complete System Flowgraph</div>
+      <div class="section-title" style="text-align:center; margin-bottom: 0;">How AAROGYA Works — End to End</div>
+    </div>
+
+    <!-- PATIENT ENTRY -->
+    <div class="patient-entry">
+      <div class="patient-avatar">👤</div>
+      <div class="patient-entry-text">
+        <h3>Patient Arrives (Post-Consultation)</h3>
+        <p>After visiting a doctor, the patient interacts with AAROGYA through their phone — no app install needed.</p>
+      </div>
+      <div class="patient-actions">
+        <div class="action-chip">📷 Photo of Prescription</div>
+        <div class="action-chip">📋 Upload Lab Report</div>
+        <div class="action-chip">✈️ Chat via Telegram Bot</div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- AGENT 1 -->
+    <div class="agent-card agent-1">
+      <div class="agent-left">
+        <div class="agent-number">Agent 01</div>
+        <div class="agent-icon">🔍</div>
+        <h3>Prescription Reader Agent</h3>
+        <p>Reads handwritten or printed prescriptions using OCR and AI, then translates into plain local-language.</p>
+        <div class="lang-badges">
+          <span class="lang-badge">Tamil</span>
+          <span class="lang-badge">Hindi</span>
+          <span class="lang-badge">Telugu</span>
+          <span class="lang-badge">Kannada</span>
+        </div>
+      </div>
+      <div class="agent-right">
+        <div class="agent-features">
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>OCR Extraction</strong> — Tesseract / Google Vision reads prescription text</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Medical Term Parsing</strong> — Identifies drug name, dose, frequency, duration</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Local Language Translation</strong> — AI converts medical English to local language</div>
+          </div>
+        </div>
+        <div class="example-box">
+          <div class="ex-label">Example Conversion</div>
+          <strong style="color:#C0392B">Before:</strong> "Amoxicillin 500mg TDS × 5 days"<br>
+          <strong style="color:#1A7A4A">After (Tamil):</strong> "காலை, மதியம், இரவு சாப்பாட்டுக்கு பிறகு 1 மாத்திரை, 5 நாள்."
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- AGENT 2 -->
+    <div class="agent-card agent-2">
+      <div class="agent-left">
+        <div class="agent-number">Agent 02</div>
+        <div class="agent-icon">⏰</div>
+        <h3>Medicine Reminder Agent</h3>
+        <p>Generates a personalised schedule and sends automated reminders via Telegram Bot with interactive follow-up buttons.</p>
+      </div>
+      <div class="agent-right">
+        <div class="agent-features">
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Auto-Schedule Generation</strong> — Creates meal-linked medicine timetable from parsed prescription</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Telegram Auto-Message</strong> — Bot sends medicine reminder in local language at exact scheduled time</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Follow-up Questions</strong> — After each reminder, bot asks "Did you take your medicine? ✅ Yes / ❌ No" with inline buttons</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Non-compliance Alert</strong> — If patient replies "No" or doesn't respond in 30 min, ASHA worker is notified</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Voice Call Fallback</strong> — Twilio voice call in Tamil/Hindi for patients who miss Telegram</div>
+          </div>
+        </div>
+        <div class="example-box" style="border-color: var(--sky); background: #EEF5FB;">
+          <div class="ex-label" style="color: var(--sky);">📲 Telegram Bot Conversation</div>
+          <strong>🤖 AAROGYA Bot:</strong> "வணக்கம்! உங்கள் BP மாத்திரை எடுக்க நேரமாகிவிட்டது. 💊 Amlodipine 5mg — இப்போது சாப்பிடுங்கள்."<br><br>
+          <strong>🤖 Follow-up (2 min later):</strong> "மாத்திரை சாப்பிட்டீர்களா?"<br>
+          <span style="display:inline-block;background:#1B6FA8;color:#fff;border-radius:6px;padding:2px 10px;font-size:11px;margin:4px 4px 0 0;">✅ ஆம், சாப்பிட்டேன்</span>
+          <span style="display:inline-block;background:#C0392B;color:#fff;border-radius:6px;padding:2px 10px;font-size:11px;margin:4px 0 0;">❌ இல்லை</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- AGENT 3 -->
+    <div class="agent-card agent-3">
+      <div class="agent-left">
+        <div class="agent-number">Agent 03</div>
+        <div class="agent-icon">🧪</div>
+        <h3>Report Explanation Agent</h3>
+        <p>Patient uploads a blood or urine report. AI explains each value in simple, understandable language.</p>
+      </div>
+      <div class="agent-right">
+        <div class="agent-features">
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>PDF / Image Parsing</strong> — Reads test report values automatically</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Value Interpretation</strong> — Flags abnormal results with context (high/low/normal)</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Plain Language Summary</strong> — Explains what each result means for the patient's health</div>
+          </div>
+        </div>
+        <div class="example-box" style="border-color: var(--purple); background: #F5EEF8;">
+          <div class="ex-label" style="color: var(--purple);">AI Explanation</div>
+          "உங்கள் இரத்தத்தில் ஹீமோகுளோபின் அளவு சற்று குறைவாக உள்ளது. இது மென்மையான இரத்த சோகையை குறிக்கலாம். மருத்துவரிடம் ஆலோசியுங்கள்."
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- AGENT 4 -->
+    <div class="agent-card agent-4">
+      <div class="agent-left">
+        <div class="agent-number">Agent 04</div>
+        <div class="agent-icon">📊</div>
+        <h3>Symptom Monitoring Agent</h3>
+        <p>Checks in daily via Telegram Bot with structured follow-up questions. Tracks symptoms over time and detects worsening trends.</p>
+      </div>
+      <div class="agent-right">
+        <div class="agent-features">
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Daily Telegram Check-in</strong> — Bot sends structured symptom questions every morning automatically</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Inline Follow-up Questions</strong> — If patient reports fever, bot asks "How many days? 1 / 2 / 3+" with tap buttons</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Voice Input</strong> — Patient speaks in Tamil; AI converts via Speech-to-Text and logs symptoms</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Symptom Trend Analysis</strong> — Detects patterns: fever 3+ days = red alert triggered automatically</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Risk Scoring</strong> — AI assigns Low / Medium / High risk level per patient after each check-in</div>
+          </div>
+        </div>
+        <div class="example-box" style="border-color: var(--red); background: #FEF0EE;">
+          <div class="ex-label" style="color: var(--red);">📲 Telegram Daily Check-in Flow</div>
+          <strong>🤖 Q1:</strong> "வணக்கம்! இன்று காய்ச்சல் இருக்கிறதா?"<br>
+          <span style="display:inline-block;background:#2AA862;color:#fff;border-radius:6px;padding:2px 9px;font-size:11px;margin:3px 3px 3px 0;">✅ இல்லை</span>
+          <span style="display:inline-block;background:#C0392B;color:#fff;border-radius:6px;padding:2px 9px;font-size:11px;margin:3px 0;">🌡️ இருக்கிறது</span><br><br>
+          <strong>🤖 Q2 (if fever):</strong> "எத்தனை நாள் ஆகிறது?"<br>
+          <span style="display:inline-block;background:#E8652A;color:#fff;border-radius:6px;padding:2px 9px;font-size:11px;margin:3px 3px 3px 0;">1 நாள்</span>
+          <span style="display:inline-block;background:#E8652A;color:#fff;border-radius:6px;padding:2px 9px;font-size:11px;margin:3px 3px 3px 0;">2 நாள்</span>
+          <span style="display:inline-block;background:#C0392B;color:#fff;border-radius:6px;padding:2px 9px;font-size:11px;margin:3px 0;">3+ நாள் 🚨</span><br><br>
+          <strong>🤖 Q3:</strong> "வலி அளவு எவ்வளவு? (1–10)"
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- AGENT 5 -->
+    <div class="agent-card agent-5">
+      <div class="agent-left">
+        <div class="agent-number">Agent 05</div>
+        <div class="agent-icon">📅</div>
+        <h3>Follow-up Tracker Agent</h3>
+        <p>Tracks all upcoming appointments, tests, vaccinations, and pregnancy checkups. Sends automated reminders.</p>
+      </div>
+      <div class="agent-right">
+        <div class="agent-features">
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Appointment Tracking</strong> — Next hospital visit, specialist, or lab test date</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Vaccination Schedule</strong> — Child immunization and adult booster reminders</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>Maternal Care</strong> — ANC visit reminders for pregnant women</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot"></div>
+            <div class="feature-text"><strong>72hr Pre-visit Alert</strong> — Reminds 3 days and 1 day before each appointment</div>
+          </div>
+        </div>
+        <div class="example-box" style="border-color: var(--gold); background: #FDF6E3;">
+          <div class="ex-label" style="color: var(--gold);">Reminder Example</div>
+          "நாளை உங்கள் இரத்த பரிசோதனை நேரம். காலை 8 மணிக்கு PHC க்கு வாருங்கள். வெறும் வயிற்றில் வரவும்."
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- ALERT -->
+    <div class="alert-band">
+      <div class="alert-icon">🚨</div>
+      <div class="alert-text">
+        <h3>Risk Detection → Automatic Doctor Alert</h3>
+        <p>If the Symptom Agent detects worsening condition (fever 3+ days, pain score ≥ 8, or alarming lab values), the system immediately notifies the healthcare worker or doctor — without the patient needing to call anyone.</p>
+        <div class="alert-chips">
+          <span class="alert-chip">🌡️ Persistent Fever Detected</span>
+          <span class="alert-chip">💔 BP Spike Alert</span>
+          <span class="alert-chip">📉 Low Hemoglobin Flag</span>
+          <span class="alert-chip">🤱 Pregnancy Emergency</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="flow-connector-arrow">↓</div></div>
+
+    <!-- DOCTOR DASHBOARD -->
+    <div class="doctor-section">
+      <div class="doctor-icon">🩺</div>
+      <div class="doctor-text">
+        <h3>Doctor / ASHA Worker Dashboard</h3>
+        <p>Healthcare workers see a real-time view of all patients — who is at risk, who missed medicines, who needs immediate attention. No calls needed; the system does the triage automatically.</p>
+      </div>
+      <div class="doctor-dashboard-mockup">
+        <div class="dash-row"><div class="dash-dot" style="background:#2AA862"></div> Murugan — Stable · BP normal</div>
+        <div class="dash-row"><div class="dash-dot" style="background:#E8652A"></div> Lakshmi — ⚠ Fever 3 days</div>
+        <div class="dash-row"><div class="dash-dot" style="background:#2AA862"></div> Selvan — Medicines taken ✓</div>
+        <div class="dash-row"><div class="dash-dot" style="background:#C0392B"></div> Kavitha — 🚨 High Risk Alert</div>
+        <div class="dash-row"><div class="dash-dot" style="background:#4A9FD4"></div> Rajan — Follow-up due tomorrow</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="tech-section">
+  <div class="section-label">Technology Stack</div>
+  <div class="section-title">Built With Best-in-Class Tools</div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-card-icon">⚛️</div>
+      <h4>Frontend</h4>
+      <p>React / Next.js<br>Mobile-first PWA</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">⚡</div>
+      <h4>Backend</h4>
+      <p>FastAPI · Node.js<br>REST + WebSockets</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">🤖</div>
+      <h4>AI Models</h4>
+      <p>Gemini / GPT-4<br>Agentic Workflows</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">👁️</div>
+      <h4>OCR</h4>
+      <p>Tesseract<br>Google Vision API</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">🗣️</div>
+      <h4>Voice AI</h4>
+      <p>Speech-to-Text<br>Text-to-Speech</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">✈️</div>
+      <h4>Communication</h4>
+      <p>Telegram Bot API<br>Twilio · SMS Gateway</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">🌐</div>
+      <h4>Translation</h4>
+      <p>IndicTrans2<br>10+ Indian Languages</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-icon">🗄️</div>
+      <h4>Database</h4>
+      <p>PostgreSQL<br>Firebase Realtime DB</p>
+    </div>
+  </div>
+</div>
+
+<!-- PITCH -->
+<div class="pitch-section">
+  <p>"AAROGYA is an Agentic AI health companion that converts prescriptions into understandable local-language guidance, monitors patients after consultation, and ensures rural patients never miss medicines or follow-ups."</p>
+  <div class="authors">AAROGYA · Bridging Healthcare & Rural India · 2025</div>
+</div>
+
+</body>
+</html>
